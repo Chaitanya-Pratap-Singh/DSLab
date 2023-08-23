@@ -19,6 +19,7 @@ int main()
 
     for (i = 0; i < n; i++)
     {
+        printf("Enter Employee %d Info \n", i + 1);
         printf("Enter the name of the employee: ");
         scanf("%s", emp[i].Name); // Removed the '&' before emp[i].Name
         printf("Enter the designation of the employee: ");
