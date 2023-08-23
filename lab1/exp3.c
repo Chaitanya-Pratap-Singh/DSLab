@@ -23,10 +23,8 @@ void main()
         scanf("%s",&emp[i].Empid);
         printf("enter the basic salary of the employee: ");
         scanf("%f",&emp[i].basic_salary);
-        printf("enter the hra of the employee: ");
-        scanf("%f",&emp[i].hra);
-        printf("enter the da of the employee: ");
-        scanf("%f",&emp[i].da);
+         emp[i].hra = emp[i].basic_salary*(45/100);
+        emp[i].da = emp[i].basic_salary*(15/100);
         }
     printf("the details of employees are:");
     for(i=0;i<n;i++)
