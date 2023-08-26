@@ -1,67 +1,92 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-struct SparseMatrix {
-    int rows;
-    int cols;
-    int numNonZero;
-    int** values;
-};
-
-struct Tuple {
-    int row;
-    int col;
-    int value;
-};
-
-void convertToTuple(struct SparseMatrix matrix, struct Tuple* tupleArray) {
-    int currentIndex = 0;
-
-    for (int i = 0; i < matrix.rows; i++) {
-        for (int j = 0; j < matrix.cols; j++) {
-            if (matrix.values[i][j] != 0) {
-                tupleArray[currentIndex].row = i;
-                tupleArray[currentIndex].col = j;
-                tupleArray[currentIndex].value = matrix.values[i][j];
-                currentIndex++;
+// Function to count the number of non-zero elements in a matrix
+int countNonZero(int matrix[][100], int n)
+{
+    int count = 0;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            if (matrix[i][j] != 0)
+            {
+                count++;
             }
         }
     }
+    return count;
 }
 
-int main() {
-    struct SparseMatrix sparseMatrix;
-    sparseMatrix.rows = 4;
-    sparseMatrix.cols = 5;
-    sparseMatrix.numNonZero = 4;
-
-    // Allocate memory for the values array
-    sparseMatrix.values = (int**)malloc(sparseMatrix.rows * sizeof(int*));
-    for (int i = 0; i < sparseMatrix.rows; i++) {
-        sparseMatrix.values[i] = (int*)malloc(sparseMatrix.cols * sizeof(int));
+// Function to display the upper triangular matrix
+void displayUpperTriangular(int matrix[][100], int n)
+{
+    printf("Upper Triangular Matrix:\n");
+    printf("\nThe upper triangular matrix is \n");
+    for(int i=0;i<n;i++)
+    {
+        for (int j=0;j<n;j++)
+        {
+            if(j>=i)
+            {
+                printf("%d",matrix[i][j]);
+            }
+            else
+            {
+                printf(" ");
+            }
+        }
+       printf("\n");
     }
 
-    // Initialize the sparse matrix (example)
-    sparseMatrix.values[0][4] = 5;
-    sparseMatrix.values[1][1] = 2;
-    sparseMatrix.values[2][2] = 9;
+}
 
-    // Convert sparse matrix to tuple format
-    struct Tuple* tupleArray = (struct Tuple*)malloc(sparseMatrix.numNonZero * sizeof(struct Tuple));
-    convertToTuple(sparseMatrix, tupleArray);
+// Function to display elements just above and below the main diagonal
+void displayDiagonalElements(int matrix[][100], int n)
+{
+    printf("Elements above and below the main diagonal:\n");
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            if (j == i - 1 || j == i + 1)
+            {
+                printf("%d ", matrix[i][j]);
+            }
+            else
+            {
+             printf(" ");
 
-    // Display the tuple format
-    printf("Row\tColumn\tValue\n");
-    for (int i = 0; i < sparseMatrix.numNonZero; i++) {
-        printf("%d\t%d\t%d\n", tupleArray[i].row, tupleArray[i].col, tupleArray[i].value);
+            }
+        }
+        printf("\n");
+    }
+}
+
+int main()
+{
+    int n;
+    printf("Enter the size of the square matrix: ");
+    scanf("%d", &n);
+
+    int matrix[100][100];
+    printf("Enter the elements of the matrix:\n");
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            scanf("%d", &matrix[i][j]);
+        }
     }
 
-    // Free allocated memory
-    for (int i = 0; i < sparseMatrix.rows; i++) {
-        free(sparseMatrix.values[i]);
-    }
-    free(sparseMatrix.values);
-    free(tupleArray);
+    // Count non-zero elements
+    int nonZeroCount = countNonZero(matrix, n);
+    printf("Number of non-zero elements: %d\n", nonZeroCount);
+
+    // Display upper triangular matrix
+    displayUpperTriangular(matrix, n);
+
+    // Display elements just above and below the main diagonal
+    displayDiagonalElements(matrix, n);
 
     return 0;
 }

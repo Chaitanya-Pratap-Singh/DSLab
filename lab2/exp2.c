@@ -1,92 +1,29 @@
 #include <stdio.h>
-
-// Function to count the number of non-zero elements in a matrix
-int countNonZero(int matrix[][100], int n)
+void main()
 {
-    int count = 0;
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            if (matrix[i][j] != 0)
-            {
-                count++;
-            }
-        }
-    }
-    return count;
-}
-
-// Function to display the upper triangular matrix
-void displayUpperTriangular(int matrix[][100], int n)
-{
-    printf("Upper Triangular Matrix:\n");
-    printf("\nThe upper triangular matrix is \n");
-    for(int i=0;i<n;i++)
-    {
-        for (int j=0;j<n;j++)
-        {
-            if(j>=i)
-            {
-                printf("%d",matrix[i][j]);
-            }
-            else
-            {
-                printf(" ");
-            }
-        }
-       printf("\n");
-    }
-
-}
-
-// Function to display elements just above and below the main diagonal
-void displayDiagonalElements(int matrix[][100], int n)
-{
-    printf("Elements above and below the main diagonal:\n");
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            if (j == i - 1 || j == i + 1)
-            {
-                printf("%d ", matrix[i][j]);
-            }
-            else
-            {
-             printf(" ");
-
-            }
-        }
-        printf("\n");
-    }
-}
-
-int main()
-{
-    int n;
-    printf("Enter the size of the square matrix: ");
+    int k, n, arr[100], temp;
+    printf("enter the size of the array \n");
     scanf("%d", &n);
-
-    int matrix[100][100];
-    printf("Enter the elements of the matrix:\n");
+    printf("Enter array elements\n");
     for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < n; j++)
-        {
-            scanf("%d", &matrix[i][j]);
-        }
+        scanf("%d", &arr[i]);
     }
+    printf("Enter the number of times array should be rotated\n");
+    scanf("%d", &k); // Add '&' before k to correctly read the value
 
-    // Count non-zero elements
-    int nonZeroCount = countNonZero(matrix, n);
-    printf("Number of non-zero elements: %d\n", nonZeroCount);
-
-    // Display upper triangular matrix
-    displayUpperTriangular(matrix, n);
-
-    // Display elements just above and below the main diagonal
-    displayDiagonalElements(matrix, n);
-
-    return 0;
+    for (int i = 0; i < k; i++)
+    {
+        temp = arr[n - 1]; // Use n - 1 to access the last element
+        for (int j = n - 1; j > 0; j--)
+        {
+            arr[j] = arr[j - 1]; // Shift elements to the right
+        }
+        arr[0] = temp; // Place the last element at the beginning
+    }
+    printf("revised array \n");
+    for (int i = 0; i < n; i++)
+    {
+        printf("%d ", arr[i]);
+    }
 }
